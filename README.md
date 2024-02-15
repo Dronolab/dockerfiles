@@ -30,6 +30,6 @@ RUN make
 RUN make install
 RUN ldconfig /usr/local/lib/
 
-# root directory is default workdir for the container
+# Root directory is default workdir for the container
 WORKDIR /
 ```
