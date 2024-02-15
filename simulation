@@ -1,53 +1,29 @@
-FROM ubuntu:22.04
+# ROS2 Humble Desktop Base Image
+FROM osrf/ros:humble-desktop-full
 
 RUN apt update && apt upgrade -y
 
-RUN apt install git locales curl python3-pip cmake -y
+# Installing requirements
+RUN apt install ca-certificates gnupg lsb-core sudo wget python3-pip -y
+RUN pip3 install --ignore-installed empy==3.3.4 pyros-genmsg kconfiglib jsonschema
 
-RUN pip3 install empy==3.3.4 pyros-genmsg setuptools==58.2.0 kconfiglib jsonschema jinja2
-
+# Install PX4-Autopilot
+WORKDIR /
 RUN git clone https://github.com/PX4/PX4-Autopilot.git --recursive
+WORKDIR "/PX4-Autopilot"
+RUN bash ./Tools/setup/ubuntu.sh
+RUN make px4_sitl
+WORKDIR /
 
-RUN locale-gen en_US en_US.UTF-8
-
-RUN update-locale LC_ALL=en_US.UTF-8 LANG=en_US.UTF-8
-
-RUN export LANG=en_US.UTF-8
-
-RUN apt install software-properties-common -y
-
-RUN add-apt-repository universe
-
-RUN apt update
-
-RUN curl -sSL https://raw.githubusercontent.com/ros/rosdistro/master/ros.key -o /usr/share/keyrings/ros-archive-keyring.gpg
-
-RUN echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/ros-archive-keyring.gpg] http://packages.ros.org/ros2/ubuntu $(. /etc/os-release && echo $UBUNTU_CODENAME) main" | tee /etc/apt/sources.list.d/ros2.list > /dev/null
-
-RUN apt update && apt upgrade -y
-
+# Install Micro-XRCE-DDS-Agent
 RUN git clone https://github.com/eProsima/Micro-XRCE-DDS-Agent.git
-
 WORKDIR "/Micro-XRCE-DDS-Agent"
-
 RUN mkdir build
-
 WORKDIR "/Micro-XRCE-DDS-Agent/build"
-
 RUN cmake ..
-
 RUN make
-
 RUN make install
-
 RUN ldconfig /usr/local/lib/
 
-WORKDIR "/PX4-Autopilot"
-
-RUN apt update && DEBIAN_FRONTEND=noninteractive apt install ca-certificates gnupg lsb-core sudo wget -y
-
-RUN bash ./Tools/setup/ubuntu.sh
-
-RUN make px4_sitl
-
+# Root directory is default workdir for the container
 WORKDIR /
