@@ -2,7 +2,7 @@
 
 Here is the dockerfile:
 
-'''bash
+```Dockerfile
 #ROS2 Humble Desktop Base Image
 FROM osrf/ros:humble-desktop-full
 
@@ -32,4 +32,4 @@ RUN ldconfig /usr/local/lib/
 
 #root directory is default workdir for the container
 WORKDIR /
-'''
+```
