@@ -1,6 +1,6 @@
 # PX4-ROS2-Humble
 
-Here is the dockerfile:
+Here is the Dockerfile:
 
 ```Dockerfile
 # ROS2 Humble Desktop Base Image
