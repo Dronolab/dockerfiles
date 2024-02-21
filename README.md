@@ -36,4 +36,4 @@ WORKDIR /
 After building this container, we restart it and run the following command from the ```PX4-Autopilot``` directory:
 ```bash
 make px4_sitl
-``
+```
