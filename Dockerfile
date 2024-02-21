@@ -12,7 +12,6 @@ WORKDIR /
 RUN git clone https://github.com/PX4/PX4-Autopilot.git --recursive
 WORKDIR "/PX4-Autopilot"
 RUN bash ./Tools/setup/ubuntu.sh
-RUN make px4_sitl
 WORKDIR /
 
 # Install Micro-XRCE-DDS-Agent
