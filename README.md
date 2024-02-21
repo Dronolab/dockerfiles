@@ -37,3 +37,5 @@ After building this container, we restart it and run the following command from 
 ```bash
 make px4_sitl
 ```
+
+We then pushed the container to ghcr.io/dronolab/px4-ros2-humble:latest
