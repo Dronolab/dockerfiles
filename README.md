@@ -32,3 +32,8 @@ RUN ldconfig /usr/local/lib/
 # Root directory is default workdir for the container
 WORKDIR /
 ```
+
+After building this container, we restart it and run the following command from the ```PX4-Autopilot``` directory:
+```bash
+make px4_sitl
+``
